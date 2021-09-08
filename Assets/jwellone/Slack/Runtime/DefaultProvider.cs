@@ -9,12 +9,12 @@ namespace jwellone.Slack
 	public class DefaultProvider : Slack.IProvider
 	{
 #if UNITY_EDITOR
-		private class EditorSender
+		private class EditorSender<T> where T : ISlackAPI
 		{
-			private ISlackAPI m_api;
-			private IEnumerator m_coroutine;
+			private readonly T m_api;
+			private readonly IEnumerator m_coroutine;
 
-			public EditorSender(ISlackAPI api)
+			public EditorSender(T api)
 			{
 				m_api = api;
 				m_coroutine = m_api.Send();
@@ -25,8 +25,6 @@ namespace jwellone.Slack
 			{
 				if (!m_coroutine.MoveNext())
 				{
-					m_api = null;
-					m_coroutine = null;
 					EditorApplication.update -= Update;
 				}
 			}
@@ -61,7 +59,7 @@ namespace jwellone.Slack
 			private set;
 		}
 
-		private string Token { get; set; }
+		public virtual string Token { get; protected set; }
 
 		public DefaultProvider(string token)
 		{
@@ -69,17 +67,12 @@ namespace jwellone.Slack
 			LogBuffer = new LogBuffer();
 		}
 
-		public virtual string GetToken()
-		{
-			return Token;
-		}
-
 		public void Send<T>(T api) where T : ISlackAPI
 		{
 #if UNITY_EDITOR
 			if (!EditorApplication.isPlaying)
 			{
-				new EditorSender(api);
+				new EditorSender<T>(api);
 				return;
 			}
 #endif

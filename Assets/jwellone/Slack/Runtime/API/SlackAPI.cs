@@ -121,7 +121,7 @@ namespace jwellone.Slack
 			private set;
 		}
 
-		public string Token => Slack.GetToken();
+		public string Token => Slack.Token;
 
 		public void SetParam(in TRequestParam parameter)
 		{
@@ -146,7 +146,11 @@ namespace jwellone.Slack
 			var header = GetHeader();
 			var body = GetBodyRawData();
 
-			yield return OnProcessBeforeSend();
+			var before = OnProcessBeforeSend();
+			while(before.MoveNext())
+			{
+				yield return before.Current;
+			}
 
 			while (true)
 			{
@@ -220,7 +224,11 @@ namespace jwellone.Slack
 				yield return Wait;
 			}
 
-			yield return OnProcessAfterSend();
+			var after = OnProcessAfterSend();
+			while(after.MoveNext())
+			{
+				yield return after.Current;
+			}
 
 			IsSending = false;
 

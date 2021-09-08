@@ -7,7 +7,7 @@ namespace jwellone.Slack
 		public interface IProvider
 		{
 			ILogBuffer LogBuffer { get; }
-			string GetToken();
+			string Token { get; }
 			void Send<T>(T api) where T : ISlackAPI;
 		}
 
@@ -24,10 +24,7 @@ namespace jwellone.Slack
 			set;
 		} = new EmptyProvider();
 
-		public static string GetToken()
-		{
-			return Provider.GetToken();
-		}
+		public static string Token => Provider.Token;
 
 		public static Color RequestLogColor
 		{
