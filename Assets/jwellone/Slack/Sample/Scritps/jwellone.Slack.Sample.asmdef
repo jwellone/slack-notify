@@ -1,0 +1,15 @@
+{
+    "name": "jwellone.Slack.Sample",
+    "references": [
+        "GUID:7e71884f1817e4e469cf1d9f4be0e262"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
