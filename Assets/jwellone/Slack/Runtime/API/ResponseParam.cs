@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace jwellone.Slack
 {
-    public interface IResponseParam
+	public interface IResponseParam
 	{
 	}
 
-    public class EmptyResponseParam : IResponseParam
+	public class EmptyResponseParam : IResponseParam
 	{
 	}
 
