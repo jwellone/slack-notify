@@ -30,6 +30,18 @@ namespace jwellone.Slack
 		void SetDisableFlg(LogFlags flags);
 	}
 
+	public class EmptyLogBuffer : ILogBuffer
+	{
+		public bool Enabled { get; set; }
+		public int Capacity { get; set; }
+		public LogFlags Flags => LogFlags.None;
+		public string Text => string.Empty;
+		public byte[] Bytes { get; private set; } = new byte[0];
+
+		public void SetEnableFlg(LogFlags flags) { }
+		public void SetDisableFlg(LogFlags flags) { }
+	}
+
 	public class LogBuffer : ILogBuffer
 	{
 		private static readonly LogFlags[] s_flags = new LogFlags[] { LogFlags.Error, LogFlags.Assert, LogFlags.Warning, LogFlags.Log, LogFlags.Exception };
