@@ -11,11 +11,12 @@ namespace jwellone.Slack
 			void Send<T>(T api) where T : ISlackAPI;
 		}
 
-		private class EmptyProvider : DefaultProvider
+		private class EmptyProvider : IProvider
 		{
-			public EmptyProvider() : base(string.Empty)
-			{
-			}
+			public EmptyProvider() { }
+			public string Token => string.Empty;
+			public ILogBuffer LogBuffer { get; } = new EmptyLogBuffer();
+			public void Send<T>(T api) where T : ISlackAPI { }
 		}
 
 		public static IProvider Provider
